@@ -8,15 +8,17 @@ fun main() {
         167.5, 215.0)
     val pizzaMoscow = PizzaMoscow(215.0, 250.5,
         180.5, 240.0)
+    val zyza = Zyza(neapolitanPizzaPrice = 130.0, romanPizzaPrice = 160.5, sicilianPizzaPrice = 120.9, tyroleanPizzaPrice = 200.5 )
     var currentPizzaCity:PizzaCity
 
     while (true)
     {
         println("Добрый день! Выберите город")
-        println("1. Москва\n2. Санкт-Петербур\n0. Выход из программы\n")
-        when (checkCom(0, 2)) {
+        println("1. Москва\n2. Санкт-Петербур\n3. Зюзя\n0. Выход из программы\n")
+        when (checkCom(0, 3)) {
             1 -> currentPizzaCity = pizzaMoscow
             2 -> currentPizzaCity = pizzaPiter
+            3 -> currentPizzaCity = zyza
             0 -> break
             else -> {
                 println("ERROR")
@@ -25,7 +27,7 @@ fun main() {
         }
 
         println("Выберите пиццу:")
-        println("1. Неополитическая пицца\n2. Римская пицца \n3. Сицилийская пиццы \n4. Тирольская пицца\n0. Показать статистику\n")
+        println("1. Неополитанская пицца\n2. Римская пицца \n3. Сицилийская пиццы \n4. Тирольская пицца\n0. Показать статистику\n")
         selectPizza(currentPizzaCity)
 
 
@@ -53,6 +55,11 @@ private fun selectPizza(currentPizzaCity: PizzaCity) {
             currentPizzaCity.tyroleanPizzaSale()
             selectAddService(currentPizzaCity)
         }
+        0 -> {
+            currentPizzaCity.showStatistics()
+
+
+        }
 
         else -> {
             println("ERROR")
@@ -64,8 +71,21 @@ private fun selectPizza(currentPizzaCity: PizzaCity) {
 fun selectAddService(currentPizzaCity: PizzaCity)
 {
     when (currentPizzaCity) {
-        is CheckPhoto -> currentPizzaCity.ShowCheckPhoto()
-        is Drink -> currentPizzaCity.drinkSale()
+        is PizzaMoscow -> {
+            currentPizzaCity.ShowCheckPhoto()
+        }
+
+        is PizzaPiter -> {
+            currentPizzaCity.drinkSale()
+        }
+
+        is Zyza -> {
+
+            currentPizzaCity.sauceShow()
+            currentPizzaCity.ShowCheckPhoto()
+            currentPizzaCity.drinkSale()
+
+        }
     }
 }
 
